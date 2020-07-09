@@ -1,0 +1,27 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create a temporary IAM Role when a dependent IAM role has been deleted when attempting to delete CFN stacks
+Parameters:
+  MyRoleName:
+    Description: IAM Role Name
+    Type: String
+Resources:
+  CloudFormationTrustRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref MyRoleName
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - cloudformation.amazonaws.com
+      Path: "/"
+      Policies:
+      - PolicyDocument:
+          Statement:
+          - Action: "*"
+            Effect: Allow
+            Resource: "*"
+        PolicyName: CloudFormationRolePolicy

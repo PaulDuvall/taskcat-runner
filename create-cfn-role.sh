@@ -24,4 +24,4 @@ if [ -z "$ROLE_NAME" ]; then
     usage
 fi
 
-aws cloudformation create-stack --stack-name cfn-role --capabilities CAPABILITY_NAMED_IAM --disable-rollback --template-body file://cfn-role.yml --parameters ParameterKey=MyRoleName,ParameterValue=$ROLE_NAME
+aws cloudformation create-stack --stack-name cfn-role-$ROLE_NAME --capabilities CAPABILITY_NAMED_IAM --disable-rollback --template-body file://cfn-role.yml --parameters ParameterKey=MyRoleName,ParameterValue=$ROLE_NAME

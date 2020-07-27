@@ -26,6 +26,6 @@ Resources:
           Statement:
           - Action: "*"
             Effect: Allow
-              Resource:
-                - !Sub arn:aws:codepipeline:${AWS::Region}-{$MyStackName}
+            Resource:
+            - arn:aws:codepipeline:${AWS::Region}-{$MyStackName}
         PolicyName: CloudFormationRolePolicy

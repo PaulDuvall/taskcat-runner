@@ -7,7 +7,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 #/ Usage: launch-stack.sh ROLE_NAME CFN_STACK_NAME
-#/ Description: Create an IAM Role. 
+#/ Description: Create an IAM Role for a specific CloudFormation Stack 
 #/ Options:
 #/   --help: Display this help message
 usage() { grep '^#/' "$0" | cut -c4- ; exit 1 ; }

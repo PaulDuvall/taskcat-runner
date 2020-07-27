@@ -52,20 +52,17 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
     info Sleeping for 20 seconds to ensure bucket removal has taken effect
     sleep 20
     
-    array=( "ccoa" "ceoa")
-    for j in "${array[@]}"
-    do
-    	echo $j
-        info "Ensuring stack $CFNSTACK-$j-$GH_BRANCH is deleted"
-        aws cloudformation delete-stack --stack-name $CFNSTACK-$j-$GH_BRANCH
-        info "Waiting for stack $CFNSTACK-$j-$GH_BRANCH to delete"
-        aws cloudformation wait stack-delete-complete --stack-name $CFNSTACK-$j-$GH_BRANCH
-    done 
     
-    array=( "aws-compliance-workshop" "aws-encryption-workshop")
+    # "aws-encryption-workshop"
+    array=( "aws-compliance-workshop" "devops-essentials")
     for i in "${array[@]}"
     do
     	echo $i
+        info "Ensuring stack $CFNSTACK-$i-$GH_BRANCH is deleted"
+        aws cloudformation delete-stack --stack-name $CFNSTACK-$i-$GH_BRANCH
+        info "Waiting for stack $CFNSTACK-$i-$GH_BRANCH to delete"
+        aws cloudformation wait stack-delete-complete --stack-name $CFNSTACK-$i-$GH_BRANCH
+    
         info "Detecting which git protocol to use for our 'git clone' command"
         set +e
         if git --git-dir ../.git remote show origin  | grep Fetch | grep -i 'paulduvall/$i'; then
@@ -87,7 +84,7 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
         cp $PIPELINEYAML zipfiles
         cd zipfiles
        
-        info Creating the pipeline stack $CFNSTACK-ccoa-$GH_BRANCH
+        info Creating the pipeline stack $CFNSTACK-$i-$GH_BRANCH
     aws cloudformation create-stack --stack-name $CFNSTACK-$i-$GH_BRANCH --capabilities CAPABILITY_NAMED_IAM --disable-rollback --template-body file://$PIPELINEYAML --parameters ParameterKey=GitHubBranch,ParameterValue=$GH_BRANCH
     done 
 

@@ -6,7 +6,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-#/ Usage: launch-stack.sh ROLE_NAME
+#/ Usage: launch-stack.sh ROLE_NAME CFN_STACK_NAME
 #/ Description: Create an IAM Role. 
 #/ Options:
 #/   --help: Display this help message
@@ -24,4 +24,10 @@ if [ -z "$ROLE_NAME" ]; then
     usage
 fi
 
-aws cloudformation create-stack --stack-name cfn-role-$ROLE_NAME --capabilities CAPABILITY_NAMED_IAM --disable-rollback --template-body file://cfn-role.yml --parameters ParameterKey=MyRoleName,ParameterValue=$ROLE_NAME
+CFN_STACK_NAME=${2:-${CFN_STACK_NAME:-}}
+if [ -z "$CFN_STACK_NAME" ]; then
+    usage
+fi
+
+
+aws cloudformation create-stack --stack-name cfn-role-$ROLE_NAME --capabilities CAPABILITY_NAMED_IAM --disable-rollback --template-body file://cfn-role.yml --parameters ParameterKey=MyRoleName,ParameterValue=$ROLE_NAME ParameterKey=MyStackName,ParameterValue=$CFN_STACK_NAME

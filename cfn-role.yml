@@ -5,9 +5,6 @@ Parameters:
   MyRoleName:
     Description: IAM Role Name
     Type: String
-  MyStackName:
-    Description: CloudFormation Stack Name
-    Type: String
 Resources:
   CloudFormationTrustRole:
     Type: AWS::IAM::Role
@@ -26,6 +23,5 @@ Resources:
           Statement:
           - Action: "*"
             Effect: Allow
-            Resource:
-            - arn:aws:codepipeline:${AWS::Region}-{$MyStackName}
+            Resource: "*"
         PolicyName: CloudFormationRolePolicy

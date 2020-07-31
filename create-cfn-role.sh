@@ -1,7 +1,7 @@
 #!/bin/bash
 # Bash template based on https://github.com/eppeters/bashtemplate.sh
 # sudo chmod +x *.sh
-# ./create-cfn-role.sh
+# ./create-cfn-role.sh ROLE_NAME STACK_NAME
 
 set -euo pipefail
 IFS=$'\n\t'
@@ -10,7 +10,7 @@ AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/availabil
 
 AWS_ACCOUNT_ID=$(aws s3 mb s3://ceoa-$(aws sts get-caller-identity --output text --query 'Account'))
 
-#/ Usage: create-cfn-role.sh ROLE_NAME TTL
+#/ Usage: create-cfn-role.sh ROLE_NAME STACK_NAME TTL
 #/ Description: Create an IAM Role for a specific CloudFormation Stack 
 #/ Options:
 #/   --help: Display this help message

@@ -43,7 +43,7 @@ Resources:
           Statement:
           - Effect: "Allow"
             Action: "*"
-            Resource: "*"
+            Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${StackName}/*"
   DeleteCFNLambda:
     Type: "AWS::Lambda::Function"
     DependsOn:

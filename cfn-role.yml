@@ -5,7 +5,7 @@ Parameters:
   MyRoleName:
     Description: IAM Role Name
     Type: String
-    MaxLength: 63
+    MaxLength: 64
   TTL:
     Type: Number
     Description: Time-to-live in minutes for the stack.
